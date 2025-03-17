@@ -6,7 +6,7 @@ require_once "../src/funcoes-fabricantes.php";
 $listaDeFabricantes = listarFabricantes($conexao);
 
 /* Contando os elementos/registros */
-$quantidade = count($listaDeFabricantes)
+$quantidade = count($listaDeFabricantes);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
