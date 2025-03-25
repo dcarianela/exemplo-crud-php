@@ -50,6 +50,7 @@ function listarUmFabricante(PDO $conexao, int $idFabricante):array{
         $consulta = $conexao->prepare($sql);
         $consulta->bindValue(":id", $idFabricante, PDO::PARAM_INT);
         $consulta->execute();
+
         /* Usamos o fetch para garantir o retorno de um único array associativo com o resultado */
         return $consulta->fetch(PDO::FETCH_ASSOC);
     } catch (Exception $erro) {
@@ -71,3 +72,5 @@ function atualizarFabricante(PDO $conexao, int $idFabricante, string $nomeDoFabr
         die("Erro ao atualizar o nome do fabricante: ".$erro->getMessage());
     }
 }
+
+// excluirFabricante: usada pela página fabricantes/excluir.php
