@@ -40,7 +40,7 @@ function inserirFabricante(PDO $conexao,  string $nomeDoFabricante):void{
     } catch (Exception $erro) {
         die("Erro ao inserir: ".$erro->getMessage());
     }
-};
+}
 
 // listarUmFabricante: usada pela página fabricantes/atualizar.php
 function listarUmFabricante(PDO $conexao, int $idFabricante):array{
@@ -74,3 +74,15 @@ function atualizarFabricante(PDO $conexao, int $idFabricante, string $nomeDoFabr
 }
 
 // excluirFabricante: usada pela página fabricantes/excluir.php
+function excluirFabricante(PDO $conexao, int $idFabricante):void{
+    $sql = "DELETE FROM fabricantes WHERE id = :id";
+
+    try {
+        $consulta = $conexao->prepare($sql);
+        $consulta->bindValue(":id", $idFabricante, PDO::PARAM_INT);
+        $consulta->execute();
+
+    } catch (Exception $erro) {
+        die("Erro ao excluir fabricante: ".$erro->getMessage());
+    }
+}
