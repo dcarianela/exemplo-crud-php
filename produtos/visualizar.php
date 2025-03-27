@@ -32,6 +32,7 @@ $listaDeProdutos = listarProdutos($conexao);
                     <h4><?=$produto['Fabricante']?></h4>
                     <p><b>Preço: </b><?=formatarPreco($produto['Preço'])?></p>
                     <p><b>Quantidade: </b> <?=$produto['Quantidade']?></p>
+                    <p><b>Total: </b><?=totalizar($produto['Preço'], $produto['Quantidade'])?></p>
                 </article>
             </div>
 <?php } ?>
