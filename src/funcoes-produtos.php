@@ -21,3 +21,11 @@ function listarProdutos(PDO $conexao):array{
         die("Erro ao carregar produtos: ".$erro->getMessage());
     }
 }
+
+function inserirProduto(
+    PDO $conexao, string $nome, float $preco, int $quantidade, int $idFabricante, string $descricao 
+    ):void {
+        $sql = "INSERT INTO
+                    nome = :nome,
+                    preco"
+}
