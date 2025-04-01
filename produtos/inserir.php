@@ -17,8 +17,6 @@ if(isset($_POST['inserir'])){
 }
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
