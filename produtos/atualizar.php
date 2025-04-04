@@ -1,18 +1,24 @@
 <?php
 require_once "../src/funcoes-produtos.php";
+require_once "../src/funcoes-fabricantes.php";
+$listaDeFabricantes = listarFabricantes($conexao);
 
 $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
-
 $produto = listarUmProduto($conexao, $id);
 
 if (isset($_POST['atualizar'])){
-    require_once "../src/funcoes-produtos.php";
-
     $nome = filter_input(INPUT_POST, "nome", FILTER_SANITIZE_SPECIAL_CHARS);
+    $preco = filter_input(INPUT_POST, "preco", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $quantidade = filter_input(INPUT_POST, "quantidade", FILTER_SANITIZE_NUMBER_INT);
+    $descricao = filter_input(INPUT_POST, "descricao", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $idFabricante = filter_input(INPUT_POST, "fabricante", FILTER_SANITIZE_NUMBER_INT);
+    
+    atualizarProduto($conexao, $id, $nome, $preco, $quantidade, $descricao, $idFabricante);
 
     header("location:visualizar.php");
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -47,9 +53,18 @@ if (isset($_POST['atualizar'])){
                 <label class="form-label" for="fabricante">Fabricante:</label>
                 <select class="form-select" name="fabricante" id="fabricante" required>
                     <option value=""></option>
-                    <option value="">Fabricante 1...</option>
-                    <option value="">Fabricante 2...</option>
-                    <option value="">Fabricante 3...</option>
+            <!-- algoritmo para seleção do fabricante do produto que sera editado
+                   
+            Se a FK da tabela produtos for igual a PK da tabela fabricantes, ou seja, se o id do fabricante do produto for igual ao id do fabricante, entao coloque o atributo selected no <option> correspondente.-->
+
+                <?php foreach($listaDeFabricantes as $fabricante){ ?>
+                    <option
+    <?php if ($produto['fabricante_id'] === $fabricante['id']) echo " selected " ?>
+                    value="<?=$fabricante['id']?>">
+                        <?=$fabricante['nome']?>
+                    </option>
+                <?php } ?>
+
                 </select>
             </div>
             <div class="mb-3">

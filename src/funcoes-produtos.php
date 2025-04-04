@@ -52,10 +52,42 @@ function listarUmProduto(PDO $conexao, int $idProduto):array{
         $consulta = $conexao->prepare($sql);
         $consulta->bindValue(":id", $idProduto, PDO::PARAM_INT);
         $consulta->execute();
-
-        /* Usamos o fetch para garantir o retorno de um único array associativo com o resultado */
         return $consulta->fetch(PDO::FETCH_ASSOC);
     } catch (Exception $erro) {
         die("Erro ao carregar produto: ".$erro->getMessage());
+    }
+}
+
+function atualizarProduto(PDO $conexao, int $idProduto, string $nome, float $preco, int $quantidade, string $descricao, int $idFabricante ) {
+    $sql = "UPDATE produtos
+            SET nome = :nome, preco = :preco, quantidade = :quantidade, fabricante_id = :fabricante_id, descricao = :descricao
+            WHERE id = :id";
+    
+    try {
+        $consulta = $conexao->prepare($sql);
+        $consulta->bindValue(":id", $idProduto, PDO::PARAM_INT);
+        $consulta->bindValue(":nome", $nome, PDO::PARAM_STR);
+        $consulta->bindValue(":preco", $preco, PDO::PARAM_STR);
+        $consulta->bindValue(":quantidade", $quantidade, PDO::PARAM_INT);
+        $consulta->bindValue(":descricao", $descricao, PDO::PARAM_STR);
+        $consulta->bindValue(":fabricante_id", $idFabricante, PDO::PARAM_INT);
+        $consulta->execute();
+
+    } catch (Exception $erro) {
+        die("Erro ao atualizar o produto: ".$erro->getMessage());
+    }
+
+}
+
+function excluirProduto(PDO $conexao, int $idProduto):void{
+    $sql = "DELETE FROM produtos WHERE id = :id";
+
+    try {
+        $consulta = $conexao->prepare($sql);
+        $consulta->bindValue(":id", $idProduto, PDO::PARAM_INT);
+        $consulta->execute();
+
+    } catch (Exception $erro) {
+        die("Erro ao excluir produto: ".$erro->getMessage());
     }
 }
